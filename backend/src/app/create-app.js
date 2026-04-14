@@ -10,10 +10,22 @@ import newsletterRoutes from "../../routes/newsletterRoutes.js"
 import { requestContext } from "../middleware/request-context.js"
 import { errorHandler, notFoundHandler } from "../middleware/error-handler.js"
 
+function getCorsOrigin(clientOrigin) {
+  if (!clientOrigin) return true
+  const origins = clientOrigin
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+
+  if (origins.length === 0) return true
+  if (origins.length === 1) return origins[0]
+  return origins
+}
+
 export function createApp(clientOrigin) {
   const app = express()
 
-  app.use(cors({ origin: clientOrigin, credentials: true }))
+  app.use(cors({ origin: getCorsOrigin(clientOrigin), credentials: true }))
   app.use(express.json({ limit: "10mb" }))
   app.use(express.urlencoded({ extended: true }))
   app.use(requestContext)

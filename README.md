@@ -47,6 +47,38 @@ Set in `backend/.env`:
 
 Without `MONGO_URI`, backend runs with in-memory fallback.
 
+## Deploy On Vercel
+
+This repo is configured for a single Vercel project:
+
+1. Frontend is built from `frontend` (Vite output served as static files).
+2. Backend API runs as a Vercel serverless function using `api/[...all].js`.
+
+### Vercel Project Settings
+
+1. Framework Preset: `Other` (or leave auto-detected).
+2. Root Directory: project root (`OKFASHION`).
+3. Build and Output are read from `vercel.json`.
+
+### Add Environment Variables In Vercel
+
+1. `MONGO_URI`
+2. `JWT_SECRET`
+3. `CLIENT_ORIGIN` (optional)
+
+For `CLIENT_ORIGIN`, you can provide one or multiple origins (comma-separated), for example:
+
+`https://your-app.vercel.app,https://your-app-git-main-your-team.vercel.app`
+
+### Deploy
+
+1. Push to GitHub (already done).
+2. Import the repository in Vercel.
+3. Add environment variables.
+4. Deploy.
+
+After deploy, frontend and API are available from the same domain, and all existing frontend calls to `/api/...` keep working.
+
 ## Engineering Docs
 
 1. `docs/ARCHITECTURE.md`
